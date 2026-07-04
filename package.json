@@ -14,8 +14,12 @@
     "lint": "npm run lint -w backend && npm run lint -w frontend",
     "test": "npm run test -w backend"
   },
+  "overrides": {
+    "@nestjs/common": "^11.1.27",
+    "@nestjs/core": "^11.1.27",
+    "@nestjs/platform-express": "^11.1.27"
+  },
   "engines": {
     "node": ">=20.0.0"
   }
 }
-
