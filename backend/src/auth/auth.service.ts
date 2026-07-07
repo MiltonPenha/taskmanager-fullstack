@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
@@ -50,7 +50,7 @@ export class AuthService {
 
     return {
       accessToken: this.jwtService.sign(payload, {
-        expiresIn: this.configService.get<string>('JWT_EXPIRES_IN') ?? '1d',
+        expiresIn: (this.configService.get<string>('JWT_EXPIRES_IN') ?? '1d') as JwtSignOptions['expiresIn'],
       }),
       user: {
         id: userId,
@@ -60,4 +60,3 @@ export class AuthService {
     };
   }
 }
-
