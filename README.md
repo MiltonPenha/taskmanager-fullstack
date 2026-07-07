@@ -1,6 +1,6 @@
 # Task Manager Fullstack
 
-Aplicacao web fullstack para gerenciamento de tarefas com autenticacao de usuario, paginas protegidas e CRUD completo de tarefas.
+Aplicação web fullstack para gerenciamento de tarefas com autenticação de usuário, páginas protegidas e CRUD completo de tarefas.
 
 ## Tecnologias
 
@@ -22,16 +22,16 @@ taskmanager-fullstack/
 
 ## Funcionalidades
 
-- Cadastro e login de usuario
+- Cadastro e login de usuário
 - Logout
-- Protecao do dashboard por token JWT
-- Listagem das tarefas do usuario autenticado
-- Criacao, edicao, exclusao e alternancia de status da tarefa
-- Filtro por status: todas, pendentes e concluidas
-- Busca por titulo
+- Proteção do dashboard por token JWT
+- Listagem das tarefas do usuário autenticado
+- Criação, edição, exclusão e alternância de status da tarefa
+- Filtro por status: todas, pendentes e concluídas
+- Busca por título
 - Feedback visual para carregamento, sucesso e erro
 - Layout responsivo para desktop e mobile
-- Testes unitarios para services principais do backend
+- Testes unitários para os principais services do backend
 
 ## Banco de dados no Supabase
 
@@ -98,7 +98,7 @@ npm run dev
 
 O frontend roda em `http://localhost:3000`.
 
-Variavel do frontend:
+Variável do frontend:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:3001
