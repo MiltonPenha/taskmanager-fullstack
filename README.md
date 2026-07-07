@@ -111,14 +111,18 @@ cd backend
 npm test
 ```
 
-Os testes cobrem:
+Os testes cobrem 10 cenários:
 
 - Registro com senha criptografada
-- Login com credenciais validas e invalidas
-- Listagem de tarefas por usuario autenticado
-- Criacao de tarefa vinculada ao usuario
-- Bloqueio de edicao de tarefa de outro usuario
-- Alternancia de status da tarefa
+- Login com credenciais válidas
+- Rejeição de login com usuário inexistente
+- Rejeição de login com senha incorreta
+- Listagem de tarefas por usuário autenticado e filtros
+- Criação de tarefa vinculada ao usuário
+- Bloqueio de edição de tarefa de outro usuário
+- Bloqueio de exclusão de tarefa de outro usuário
+- Bloqueio de alteração de status de tarefa de outro usuário
+- Alternância de status da tarefa
 
 ## Build
 
