@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
-import { Loader2, UserPlus } from 'lucide-react';
+import { Eye, EyeOff, Loader2, UserPlus } from 'lucide-react';
 import { registerUser } from '../../lib/api';
 import { saveAuth } from '../../lib/auth-storage';
 
@@ -12,6 +12,7 @@ export default function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -93,14 +94,25 @@ export default function RegisterPage() {
 
               <label className="grid gap-2 text-sm font-semibold text-white">
                 Senha
-                <input
-                  className="h-12 rounded-lg border border-white/30 bg-white px-4 text-ink outline-none transition placeholder:text-slate-400 focus:border-white focus:ring-2 focus:ring-white/30"
-                  type="password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                  placeholder="Mínimo 6 caracteres"
-                  autoComplete="new-password"
-                />
+                <span className="relative">
+                  <input
+                    className="h-12 w-full rounded-lg border border-white/30 bg-white px-4 pr-12 text-ink outline-none transition placeholder:text-slate-400 focus:border-white focus:ring-2 focus:ring-white/30"
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    placeholder="Mínimo 6 caracteres"
+                    autoComplete="new-password"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((current) => !current)}
+                    className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-muted transition hover:bg-canvas hover:text-ink"
+                    aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                    title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                  >
+                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  </button>
+                </span>
               </label>
             </div>
 
