@@ -89,5 +89,25 @@ describe('AuthService', () => {
       }),
     ).rejects.toBeInstanceOf(UnauthorizedException);
   });
-});
 
+  it('rejects login when the password does not match', async () => {
+    const hashedPassword = await bcrypt.hash('correct-password', 10);
+    usersService.findByEmail.mockResolvedValue({
+      id: 'user-id',
+      name: 'Milton',
+      email: 'milton@email.com',
+      password: hashedPassword,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    await expect(
+      service.login({
+        email: 'milton@email.com',
+        password: 'wrong-password',
+      }),
+    ).rejects.toBeInstanceOf(UnauthorizedException);
+
+    expect(jwtService.sign).not.toHaveBeenCalled();
+  });
+});

@@ -78,6 +78,22 @@ describe('TasksService', () => {
     expect(prisma.task.update).not.toHaveBeenCalled();
   });
 
+  it('does not delete tasks from another user', async () => {
+    prisma.task.findFirst.mockResolvedValue(null);
+
+    await expect(service.remove('user-id', 'task-id')).rejects.toBeInstanceOf(NotFoundException);
+
+    expect(prisma.task.delete).not.toHaveBeenCalled();
+  });
+
+  it('does not toggle tasks from another user', async () => {
+    prisma.task.findFirst.mockResolvedValue(null);
+
+    await expect(service.toggleStatus('user-id', 'task-id')).rejects.toBeInstanceOf(NotFoundException);
+
+    expect(prisma.task.update).not.toHaveBeenCalled();
+  });
+
   it('toggles task status', async () => {
     prisma.task.findFirst.mockResolvedValue({
       id: 'task-id',
@@ -100,4 +116,3 @@ describe('TasksService', () => {
     });
   });
 });
-
