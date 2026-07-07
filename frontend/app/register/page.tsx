@@ -6,6 +6,7 @@ import { FormEvent, useState } from 'react';
 import { Eye, EyeOff, Loader2, UserPlus } from 'lucide-react';
 import { registerUser } from '../../lib/api';
 import { saveAuth } from '../../lib/auth-storage';
+import { Toast, ToastMessage } from '../../components/toast';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -14,11 +15,13 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [toast, setToast] = useState<ToastMessage | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError('');
+    setToast(null);
 
     if (name.trim().length < 2) {
       setError('Informe um nome com pelo menos 2 caracteres.');
@@ -35,16 +38,17 @@ export default function RegisterPage() {
     try {
       const auth = await registerUser({ name: name.trim(), email, password });
       saveAuth(auth);
-      router.push('/dashboard');
+      setToast({ type: 'success', message: 'Cadastro realizado com sucesso.' });
+      window.setTimeout(() => router.push('/dashboard'), 700);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Não foi possível cadastrar.');
-    } finally {
       setLoading(false);
     }
   }
 
   return (
     <main className="min-h-screen overflow-hidden bg-white">
+      <Toast toast={toast} />
       <section className="relative grid min-h-screen lg:grid-cols-[1fr_1.08fr]">
         <div className="flex min-h-[42vh] items-center justify-center bg-white px-6 py-12 lg:min-h-screen">
           <div className="text-center">
