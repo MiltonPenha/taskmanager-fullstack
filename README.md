@@ -44,7 +44,6 @@ Exemplo usando a connection string direta do Supabase:
 
 ```env
 DATABASE_URL="postgresql://postgres:[YOUR-PASSWORD]@db.ewystfwehfuezwnaswkq.supabase.co:5432/postgres"
-DIRECT_URL="postgresql://postgres:[YOUR-PASSWORD]@db.ewystfwehfuezwnaswkq.supabase.co:5432/postgres"
 JWT_SECRET="your-super-secret-key"
 JWT_EXPIRES_IN="1d"
 PORT=3001
@@ -104,13 +103,6 @@ Variavel do frontend:
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:3001
 ```
-
-## Usuario de teste
-
-Depois de rodar `npm run prisma:seed` no backend:
-
-- Email: `test@example.com`
-- Senha: `password123`
 
 ## Testes
 
