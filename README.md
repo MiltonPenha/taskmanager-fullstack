@@ -40,15 +40,18 @@ taskmanager-fullstack/
 3. Copie a connection string PostgreSQL.
 4. No backend, crie o arquivo `.env` com base em `backend/.env.example`.
 
-Exemplo:
+Exemplo usando a connection string direta do Supabase:
 
 ```env
-DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/postgres?schema=public"
+DATABASE_URL="postgresql://postgres:[YOUR-PASSWORD]@db.ewystfwehfuezwnaswkq.supabase.co:5432/postgres"
+DIRECT_URL="postgresql://postgres:[YOUR-PASSWORD]@db.ewystfwehfuezwnaswkq.supabase.co:5432/postgres"
 JWT_SECRET="your-super-secret-key"
 JWT_EXPIRES_IN="1d"
 PORT=3001
 FRONTEND_URL=http://localhost:3000
 ```
+
+Use a senha real do banco no lugar de `[YOUR-PASSWORD]`. Caso a senha tenha caracteres especiais, aplique percent-encode antes de colocar na URL.
 
 ## Como rodar o backend
 
@@ -140,36 +143,3 @@ Frontend:
 cd frontend
 npm run build
 ```
-
-## Deploy
-
-O projeto esta preparado para deploy separando backend e frontend.
-
-Sugestao:
-
-- Backend: Render, Railway ou Fly.io
-- Frontend: Vercel
-- Banco: Supabase PostgreSQL
-
-Variaveis necessarias no backend em producao:
-
-- `DATABASE_URL`
-- `JWT_SECRET`
-- `JWT_EXPIRES_IN`
-- `FRONTEND_URL`
-
-Variavel necessaria no frontend em producao:
-
-- `NEXT_PUBLIC_API_URL`
-
-Link de deploy: nao configurado neste ambiente.
-
-## Como explicar a arquitetura
-
-O backend foi separado em modulos `auth`, `users`, `tasks` e `prisma` para manter responsabilidades claras. O controller lida com HTTP, o service concentra regras de negocio e o Prisma centraliza o acesso ao banco.
-
-A autenticacao usa JWT porque o frontend precisa enviar um token nas requisicoes protegidas. A senha e salva com hash bcrypt, nunca em texto puro.
-
-As tarefas sempre sao consultadas usando `userId` do token autenticado. Isso garante que cada usuario liste, edite e exclua apenas as proprias tarefas.
-
-No frontend, as chamadas HTTP ficam em `lib/api.ts`, os dados de autenticacao ficam em `lib/auth-storage.ts` e as telas usam esses helpers. Essa separacao facilita manutencao e explicacao em entrevista.
