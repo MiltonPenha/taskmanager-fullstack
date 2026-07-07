@@ -37,6 +37,7 @@ export default function DashboardPage() {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [summaryTasks, setSummaryTasks] = useState<Task[]>([]);
   const [status, setStatus] = useState<StatusFilter>('ALL');
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
@@ -49,11 +50,11 @@ export default function DashboardPage() {
 
   const totals = useMemo(
     () => ({
-      all: tasks.length,
-      done: tasks.filter((task) => task.status === 'DONE').length,
-      pending: tasks.filter((task) => task.status === 'PENDING').length,
+      all: summaryTasks.length,
+      done: summaryTasks.filter((task) => task.status === 'DONE').length,
+      pending: summaryTasks.filter((task) => task.status === 'PENDING').length,
     }),
-    [tasks],
+    [summaryTasks],
   );
 
   const isFiltered = status !== 'ALL' || search.trim().length > 0;
@@ -73,8 +74,17 @@ export default function DashboardPage() {
       setLoading(true);
 
       try {
-        const data = await getTasks(authToken, { status: nextStatus, search: nextSearch });
-        setTasks(data);
+        const shouldReuseFilteredData = nextStatus === 'ALL' && !nextSearch.trim();
+        const filteredTasks = await getTasks(authToken, { status: nextStatus, search: nextSearch });
+
+        setTasks(filteredTasks);
+
+        if (shouldReuseFilteredData) {
+          setSummaryTasks(filteredTasks);
+        } else {
+          const allTasks = await getTasks(authToken, { status: 'ALL', search: '' });
+          setSummaryTasks(allTasks);
+        }
       } catch (err) {
         if (err instanceof Error && err.message.toLowerCase().includes('unauthorized')) {
           handleUnauthorized();
