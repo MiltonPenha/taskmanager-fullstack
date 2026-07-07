@@ -34,12 +34,12 @@ export function TaskModal({ open, task, loading, onClose, onSubmit }: TaskModalP
     setError('');
 
     if (title.trim().length < 3) {
-      setError('O titulo deve ter pelo menos 3 caracteres.');
+      setError('O título deve ter pelo menos 3 caracteres.');
       return;
     }
 
     if (description.trim().length < 3) {
-      setError('A descricao deve ter pelo menos 3 caracteres.');
+      setError('A descrição deve ter pelo menos 3 caracteres.');
       return;
     }
 
@@ -51,17 +51,19 @@ export function TaskModal({ open, task, loading, onClose, onSubmit }: TaskModalP
 
   return (
     <div className="fixed inset-0 z-40 flex items-end justify-center bg-ink/50 px-4 pb-4 pt-10 md:items-center md:p-6">
-      <form onSubmit={handleSubmit} className="w-full max-w-lg rounded-lg bg-white p-5 shadow-soft md:p-6">
+      <form onSubmit={handleSubmit} className="w-full max-w-lg rounded-lg border border-line bg-white p-5 shadow-soft md:p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold text-ink">{task ? 'Editar tarefa' : 'Nova tarefa'}</h2>
-            <p className="mt-1 text-sm text-gray-500">{task ? 'Atualize os dados da tarefa.' : 'Registre uma nova tarefa.'}</p>
+            <p className="mt-1 text-sm text-muted">{task ? 'Atualize os dados da tarefa.' : 'Registre uma nova tarefa.'}</p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-gray-200 text-gray-600 transition hover:bg-gray-50"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-line text-muted transition hover:bg-canvas disabled:opacity-60"
             title="Fechar"
+            aria-label="Fechar"
+            disabled={loading}
           >
             <X className="h-5 w-5" />
           </button>
@@ -72,25 +74,27 @@ export function TaskModal({ open, task, loading, onClose, onSubmit }: TaskModalP
         )}
 
         <div className="mt-5 grid gap-4">
-          <label className="grid gap-2 text-sm font-medium text-gray-700">
-            Titulo
+          <label className="grid gap-2 text-sm font-medium text-ink">
+            Título
             <input
-              className="h-11 rounded-lg border border-gray-300 px-3 outline-none transition focus:border-meadow focus:ring-2 focus:ring-meadow/20"
+              className="h-11 rounded-lg border border-line px-3 outline-none transition focus:border-meadow focus:ring-2 focus:ring-meadow/20 disabled:bg-canvas disabled:text-muted"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
               maxLength={120}
-              placeholder="Ex: estudar NestJS"
+              placeholder="Ex: Estudar"
+              disabled={loading}
             />
           </label>
 
-          <label className="grid gap-2 text-sm font-medium text-gray-700">
-            Descricao
+          <label className="grid gap-2 text-sm font-medium text-ink">
+            Descrição
             <textarea
-              className="min-h-32 resize-none rounded-lg border border-gray-300 px-3 py-3 outline-none transition focus:border-meadow focus:ring-2 focus:ring-meadow/20"
+              className="min-h-32 resize-none rounded-lg border border-line px-3 py-3 outline-none transition focus:border-meadow focus:ring-2 focus:ring-meadow/20 disabled:bg-canvas disabled:text-muted"
               value={description}
               onChange={(event) => setDescription(event.target.value)}
               maxLength={500}
               placeholder="Detalhes da tarefa"
+              disabled={loading}
             />
           </label>
         </div>
@@ -99,14 +103,15 @@ export function TaskModal({ open, task, loading, onClose, onSubmit }: TaskModalP
           <button
             type="button"
             onClick={onClose}
-            className="inline-flex h-11 items-center justify-center rounded-lg border border-gray-300 px-4 font-semibold text-gray-700 transition hover:bg-gray-50"
+            disabled={loading}
+            className="inline-flex h-11 items-center justify-center rounded-lg border border-line px-4 font-semibold text-ink transition hover:bg-canvas disabled:opacity-60"
           >
             Cancelar
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-meadow px-4 font-semibold text-white transition hover:bg-meadow/90 disabled:opacity-60"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-meadow px-4 font-semibold text-white transition hover:bg-meadow-dark disabled:opacity-60"
           >
             {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Save className="h-5 w-5" />}
             Salvar
@@ -116,4 +121,3 @@ export function TaskModal({ open, task, loading, onClose, onSubmit }: TaskModalP
     </div>
   );
 }
-

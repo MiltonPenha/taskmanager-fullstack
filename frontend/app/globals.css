@@ -8,8 +8,8 @@
 
 body {
   margin: 0;
-  background: #f7f2e8;
-  color: #111827;
+  background: #f8faf9;
+  color: #0f172a;
 }
 
 button,
@@ -23,3 +23,7 @@ button:disabled {
   cursor: not-allowed;
 }
 
+:focus-visible {
+  outline: 2px solid #24745f;
+  outline-offset: 2px;
+}

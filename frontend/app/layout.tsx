@@ -3,7 +3,12 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Task Manager',
-  description: 'Gerenciador de tarefas com autenticacao JWT',
+  description: 'Gerenciador de tarefas com autenticação JWT',
+  icons: {
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
+  },
 };
 
 export default function RootLayout({
@@ -17,4 +22,3 @@ export default function RootLayout({
     </html>
   );
 }
-

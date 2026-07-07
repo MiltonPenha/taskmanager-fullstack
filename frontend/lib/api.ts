@@ -21,7 +21,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   if (!response.ok) {
     const error = await response.json().catch(() => null);
     const message = Array.isArray(error?.message) ? error.message.join(', ') : error?.message;
-    throw new Error(message ?? 'Nao foi possivel concluir a acao.');
+    throw new Error(message ?? 'Não foi possível concluir a ação.');
   }
 
   return response.json();
@@ -85,4 +85,3 @@ export function toggleTaskStatus(token: string, id: string) {
     token,
   });
 }
-
